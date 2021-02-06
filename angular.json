@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "tree-hierarchy"
+  "defaultProject": "tree-hierarchy",
+  "cli": {
+    "analytics": false
+  }
 }
