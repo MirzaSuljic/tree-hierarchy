@@ -1,9 +1,25 @@
-<!-- <ul id="myUL" *ngFor="let employee of root; let i = index">
-  <li (click)="toggleShow()"><span class="caret"  >{{employee.alias}}</span>
-    <ul class="nested" *[ngClass]="isShown ? 'animatedShow' : 'd-none' ">
-      {{employee.alias}}
-    </ul>
-  </li>
-</ul> -->
-
+<div class="pg-orgchart">
+    <div class="org-chart">
+      <ul class="recursive-list">
+        <ng-template #recursiveList let-listOfEmployees>
+          <ng-container *ngFor="let list of listOfEmployees; let i=index; let last = last">
+            <li class="list-employees">
+              <div class="user" (click)="toggleShow(list?.employees)">{{list.alias}}</div>
+              <ul>
+                <li>
+                  <ng-container *ngIf="list.employees?.length > 0">
+                    <div *ngIf="list.employees?.hidden">
+                      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list.employees }">
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </li>
+              </ul>
+            </li>
+          </ng-container>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: listOfEmployees }"></ng-container>
+      </ul>
+    </div>
+  </div>
 

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   testList = [
@@ -146,27 +146,34 @@ export class AppComponent implements OnInit {
       employees: [],
     }
   ]
+  listOfEmployees=[];
   ngOnInit(): void {
+    this.getMangers();
+  }
 
-this.getMangers();
-}
-
-getMangers(){
-  const idMapping = this.testList.reduce((acc, el, i) => {
-    acc[el.id] = i;
-    return acc;
-  }, {})
+  getMangers() {
+    const idMapping = this.testList.reduce((acc, el, i) => {
+      acc[el.id] = i;
+      return acc;
+    }, {})
 
 
-  let manager;
-  this.testList.forEach(el => {
-    if (el.managerId === null) {
-      manager = el;
-      return;
+    let manager = {};
+    this.testList.forEach(el => {
+      if (el.managerId === null) {
+        manager = el;
+        return manager;
+      }
+      const managerEl = this.testList[idMapping[el.managerId]];
+      managerEl.employees = ([...(managerEl.employees || []), el]);
+    });
+    this.listOfEmployees.push(manager);
+
+  }
+  toggleShow(employee) {
+    if (employee) {
+
+      employee.hidden = !employee.hidden;
     }
-    const managerEl = this.testList[idMapping[el.managerId]];
-    managerEl.employees = [...(managerEl.employees || []), el];
-  });
-  console.log(manager);
-}
+  }
 }
