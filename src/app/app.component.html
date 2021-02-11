@@ -1,25 +1,41 @@
 <div class="pg-orgchart">
-    <div class="org-chart">
-      <ul class="recursive-list">
-        <ng-template #recursiveList let-listOfEmployees>
-          <ng-container *ngFor="let list of listOfEmployees; let i=index; let last = last">
-            <li class="list-employees">
-              <div class="user" (click)="toggleShow(list?.employees)">{{list.alias}}</div>
-              <ul>
-                <li>
-                  <ng-container *ngIf="list.employees?.length > 0">
-                    <div *ngIf="list.employees?.hidden">
-                      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list.employees }">
-                      </ng-container>
-                    </div>
-                  </ng-container>
-                </li>
-              </ul>
-            </li>
-          </ng-container>
-        </ng-template>
-        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: listOfEmployees }"></ng-container>
-      </ul>
-    </div>
-  </div>
+  <div class="org-chart">
+    <ul class="recursive-list">
+      <ng-template #recursiveList let-listOfEmployees>
+        <ng-container *ngFor="let list of listOfEmployees; let i=index; let last = last">
+          <li class="list-employees">
+            <div class="user" (click)="toggleShow(list?.employees)">
+              <div class="d-flex">
+                <div>
+                  <img src="" alt="photo">
+                </div>
+                <div>
+                  <span *ngIf="list.employees?.length > 0" >{{list.employees?.length }}</span>
+                  <i *ngIf="list.employees?.length > 0 && !list.employees?.hidden" class="fa fa-angle-up"
+                    aria-hidden="true"></i>
+                  <i *ngIf="list.employees?.length > 0 && list.employees?.hidden" class="fa fa-angle-down"
+                    aria-hidden="true"></i>
+                </div>
 
+              </div>
+              <h5 class="name">{{list. firstName}} {{list.lastName}}</h5>
+              <h6 class="role">{{list.jobTitle}}</h6>
+
+            </div>
+            <ul>
+              <li>
+                <ng-container *ngIf="list.employees?.length > 0">
+                  <div *ngIf="list.employees?.hidden">
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list.employees }">
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: listOfEmployees }"></ng-container>
+    </ul>
+  </div>
+</div>
